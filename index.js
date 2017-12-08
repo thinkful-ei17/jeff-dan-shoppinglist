@@ -120,6 +120,11 @@ function handleFilterToggle() {
   });
 }
 
+//Search Items User Story
+//1. User enters filter term in filter text box.
+//2. Reference store for matching item that matches user input
+//3. Page re-renders with other items removed that don't match user input
+
 //1. Record user behavior (event listener, optional) -> Complete
 //2. Interacting with the store 
 //3. Re-Render the shopping list
