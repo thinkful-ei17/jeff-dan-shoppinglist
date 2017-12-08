@@ -35,13 +35,23 @@ function generateShoppingItemsString(shoppingList) {
   return items.join('');
 }
 
-// const checkedItemsArr = STORE.items.filter( () => STORE.items.checked = true); 
 
 function renderShoppingList() {
   // render the shopping list in the DOM
   console.log('`renderShoppingList` ran');
-  const shoppingListItemsString = generateShoppingItemsString(STORE.items);
-
+  let shoppingListItemsString;
+  if (STORE.hideCheckedItems === true) {
+    console.log('hideCheckedItems works!');
+    const checkedItemsArr = STORE.items.filter(item => item.checked === false); 
+    console.log(checkedItemsArr);
+    shoppingListItemsString = generateShoppingItemsString(checkedItemsArr);
+  }
+  else {
+    shoppingListItemsString = generateShoppingItemsString(STORE.items);
+  }
+  //if hideCheckeditem is set to true, filter store.items.checked that are 
+  //set to true and hide them
+  
   // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
 }
@@ -98,7 +108,6 @@ function handleDeleteItemClicked() {
     renderShoppingList();
   }); 
 }
-
 
 function handleFilterToggle() {
   $('#js-filter-toggle').on('click', event => {
