@@ -56,12 +56,12 @@ function renderShoppingList() {
   $('.js-shopping-list').html(shoppingListItemsString);
 }
 
-
+//adds the value that the user entered into the STORE.
 function addItemToShoppingList(itemName) {
   console.log(`Adding "${itemName}" to shopping list`);
   STORE.items.push({name: itemName, checked: false});
 }
-
+//user submits new item to list and clicks "Add item" button. This grabs the item from the submit field and stores it to variable newItemName, then invokes addItemtoShopping List. 
 function handleNewItemSubmit() {
   $('#js-shopping-list-form').submit(function(event) {
     event.preventDefault();
@@ -71,6 +71,17 @@ function handleNewItemSubmit() {
     addItemToShoppingList(newItemName);
     renderShoppingList();
   });
+}
+//user enters a filter item to search for and clicks submit
+function handleFilterSubmit(){
+  $('#js-shopping-list-filter-form').submit(function(event) {
+    event.preventDefault();
+    console.log('`handleFilterSubmit` ran');
+    const filterItemName = $('.js-shopping-list-filter').val();
+    $('.js-shopping-list-filter').val('');
+    
+    renderShoppingList();
+  });      
 }
 
 function toggleCheckedForListItem(itemIndex) {
@@ -141,6 +152,7 @@ function handleShoppingList() {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleFilterToggle();
+  handleFilterSubmit();
 }
 
 // when the page loads, call `handleShoppingList`
