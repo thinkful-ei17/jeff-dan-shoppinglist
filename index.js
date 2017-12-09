@@ -73,16 +73,16 @@ function handleNewItemSubmit() {
   });
 }
 //user enters a filter item to search for and clicks submit
-function handleFilterSubmit(){
-  $('#js-shopping-list-filter-form').submit(function(event) {
-    event.preventDefault();
-    console.log('`handleFilterSubmit` ran');
-    const filterItemName = $('.js-shopping-list-filter').val();
-    $('.js-shopping-list-filter').val('');
+// function handleFilterSubmit(){
+//   $('#js-shopping-list-filter-form').submit(function(event) {
+//     event.preventDefault();
+//     console.log('`handleFilterSubmit` ran');
+//     const filterItemName = $('.js-shopping-list-filter').val();
+//     $('.js-shopping-list-filter').val('');
     
-    renderShoppingList();
-  });      
-}
+//     renderShoppingList();
+//   });      
+// }
 
 function toggleCheckedForListItem(itemIndex) {
   console.log('Toggling checked property for item at index ' + itemIndex);
