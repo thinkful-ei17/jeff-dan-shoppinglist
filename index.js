@@ -7,7 +7,8 @@ const STORE = {
     {name: 'milk', checked: true},
     {name: 'bread', checked: false}
   ],
-  hideCheckedItems: false
+  hideCheckedItems: false,
+  SearchItemSubmitted: false
 };
 
 
@@ -36,11 +37,20 @@ function generateShoppingItemsString(shoppingList) {
 }
 
 
-function renderShoppingList() {
+function renderShoppingList(searchItem) {
   // render the shopping list in the DOM
   console.log('`renderShoppingList` ran');
+  console.log(searchItem);
   let shoppingListItemsString;
-  if (STORE.hideCheckedItems === true) {
+  //if search item submitted === true;
+  //Render function for search items filter button
+  //Render function for Hide Completed toggle button
+  if (STORE.SearchItemSubmitted === true){
+    const searchItemsArr = STORE.items.filter(item => item.name === searchItem);
+    console.log(searchItemsArr);
+    shoppingListItemsString = generateShoppingItemsString(searchItemsArr); 
+  }
+  else if (STORE.hideCheckedItems === true) {
     console.log('hideCheckedItems works!');
     const checkedItemsArr = STORE.items.filter(item => item.checked === false); 
     console.log(checkedItemsArr);
@@ -72,6 +82,9 @@ function handleNewItemSubmit() {
     renderShoppingList();
   });
 }
+
+
+
 //user enters a filter item to search for and clicks submit
 function handleFilterSubmit(){
   $('#js-shopping-list-filter-form').submit(function(event) {
@@ -79,8 +92,9 @@ function handleFilterSubmit(){
     console.log('`handleFilterSubmit` ran');
     const filterItemName = $('.js-shopping-list-filter').val();
     $('.js-shopping-list-filter').val('');
-    
-    renderShoppingList();
+    STORE.SearchItemSubmitted = true;    
+    renderShoppingList(filterItemName);
+    STORE.SearchItemSubmitted = false;        
   });      
 }
 
