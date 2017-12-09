@@ -7,7 +7,8 @@ const STORE = {
     {name: 'milk', checked: true},
     {name: 'bread', checked: false}
   ],
-  hideCheckedItems: false
+  hideCheckedItems: false,
+  SearchItemSubmitted: false
 };
 
 
@@ -40,6 +41,9 @@ function renderShoppingList() {
   // render the shopping list in the DOM
   console.log('`renderShoppingList` ran');
   let shoppingListItemsString;
+  //if search item submitted === true;
+  //Render function for search items filter button
+  //Render function for Hide Completed toggle button
   if (STORE.hideCheckedItems === true) {
     console.log('hideCheckedItems works!');
     const checkedItemsArr = STORE.items.filter(item => item.checked === false); 
@@ -49,12 +53,32 @@ function renderShoppingList() {
   else {
     shoppingListItemsString = generateShoppingItemsString(STORE.items);
   }
-  //if hideCheckeditem is set to true, filter store.items.checked that are 
-  //set to true and hide them
-  
   // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
 }
+
+function renderFilterShoppingList(searchItem){
+  let shoppingListItemsString;
+//  if (STORE.SearchItemSubmitted === true && STORE.hideCheckedItems === true) {
+
+//   }
+  else (STORE.SearchItemSubmitted === true){
+    const searchItemsArr = STORE.items.filter(item => item.name === searchItem);
+    console.log(searchItemsArr);
+    shoppingListItemsString = generateShoppingItemsString(searchItemsArr);
+    $('.js-shopping-list').html(shoppingListItemsString);
+  }      
+//  $('.js-shopping-list').html(shoppingListItemsString);
+}
+
+//if search filter is on, then  "hide completed items" is checked, then don't run $('.js-shopping-list').html(shoppingListItemsString);
+
+
+
+//if hideCheckeditem is set to true, filter store.items.checked that are 
+//set to true and hide them
+  
+
 
 //adds the value that the user entered into the STORE.
 function addItemToShoppingList(itemName) {
@@ -72,17 +96,19 @@ function handleNewItemSubmit() {
     renderShoppingList();
   });
 }
+
 //user enters a filter item to search for and clicks submit
-// function handleFilterSubmit(){
-//   $('#js-shopping-list-filter-form').submit(function(event) {
-//     event.preventDefault();
-//     console.log('`handleFilterSubmit` ran');
-//     const filterItemName = $('.js-shopping-list-filter').val();
-//     $('.js-shopping-list-filter').val('');
-    
-//     renderShoppingList();
-//   });      
-// }
+function handleFilterSubmit(){
+  $('#js-shopping-list-filter-form').submit(function(event) {
+    event.preventDefault();
+    console.log('`handleFilterSubmit` ran');
+    const filterItemName = $('.js-shopping-list-filter').val();
+    $('.js-shopping-list-filter').val('');
+    STORE.SearchItemSubmitted = true;    
+    renderFilterShoppingList(filterItemName);
+    STORE.SearchItemSubmitted = false;        
+  });      
+}
 
 function toggleCheckedForListItem(itemIndex) {
   console.log('Toggling checked property for item at index ' + itemIndex);
